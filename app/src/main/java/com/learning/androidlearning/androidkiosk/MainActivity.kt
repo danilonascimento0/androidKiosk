@@ -9,12 +9,13 @@ import android.graphics.PixelFormat
 
 class MainActivity : AppCompatActivity() {
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val manager = applicationContext
-            .getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        //region Block Status Bar
+        val manager = applicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         val localLayoutParams = WindowManager.LayoutParams()
         localLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR
@@ -28,12 +29,12 @@ class MainActivity : AppCompatActivity() {
         WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 
         localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
-        localLayoutParams.height = (50 * resources
-            .displayMetrics.scaledDensity).toInt()
+        localLayoutParams.height = (50 * resources .displayMetrics.scaledDensity).toInt()
         localLayoutParams.format = PixelFormat.TRANSPARENT
 
         val view = CustomViewGroup(this)
 
         manager.addView(view, localLayoutParams)
+        //endregion
     }
 }

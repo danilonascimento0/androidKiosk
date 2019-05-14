@@ -13,9 +13,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <meta-data android:name="HOME_KEY_NOT_SPECIAL" android:value="true" />
+        <meta-data android:name="HOME_KEY_NOT_SPECIAL" android:value="true" /> // For stop home key on certain behavior
 
-        <receiver android:name="com.learning.androidlearning.androidkiosk.MyBroadcastReceiver">
+        <receiver android:name="com.learning.androidlearning.androidkiosk.MyBroadcastReceiver"> //Receiver for Block Buttons
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

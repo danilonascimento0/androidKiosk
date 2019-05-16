@@ -6,13 +6,24 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.view.Gravity
 import android.graphics.PixelFormat
+import android.os.Build
 import android.view.View
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        txAndroidVersion.text = Build.VERSION.SDK_INT.toString()
+        txAndroidRelease.text = Build.VERSION.RELEASE.toString()
+
+        btStartLockTask.setOnClickListener {
+            moveTaskToBack(true);
+            exitProcess(-1)
+        }
 
         blockStatusBar()
     }

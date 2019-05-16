@@ -10,6 +10,7 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
 
     var kiosk: Kiosk = Kiosk(this)
+    //var isKioskActive: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         txAndroidVersion.text = Build.VERSION.SDK_INT.toString()
         txAndroidRelease.text = Build.VERSION.RELEASE.toString()
 
+        kiosk.hideSystemUI(window)
         btKiosk.setOnClickListener {
             setKioskMode()
         }
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun setKioskMode() {
         kiosk.startKioskMode()
         btKiosk.text = "Desativar Kiosk"
+        //isKioskActive = true
 
         btKiosk.setOnClickListener {
             removeKioskMode()
@@ -40,24 +43,21 @@ class MainActivity : AppCompatActivity() {
     private fun removeKioskMode() {
         kiosk.stopKioskMode()
         btKiosk.text = "Ativar Kiosk"
+        //isKioskActive = false
 
         btKiosk.setOnClickListener {
             setKioskMode()
         }
     }
 
-    //override fun onWindowFocusChanged(hasFocus: Boolean) {
-    //    super.onWindowFocusChanged(hasFocus)
-    //    if (hasFocus) hideSystemUI()
-    //}
-
-    private fun hideSystemUI() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            //if (isKioskActive) {
+                kiosk.hideSystemUI(window)
+            //} else {
+                //kiosk.showSystemUI(window)
+            //}
+        }
     }
 }

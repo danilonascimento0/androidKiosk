@@ -4,10 +4,11 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
+import android.view.View
+import android.view.Window
 import android.view.WindowManager
 
 class Kiosk(context: Context) : AppCompatActivity() {
-
     private var context: Context = context
     private var viewBlockingStatus: CustomViewGroup? = null
 
@@ -49,5 +50,21 @@ class Kiosk(context: Context) : AppCompatActivity() {
         localLayoutParams.gravity = Gravity.BOTTOM
         val view = CustomViewGroup(this)
         manager.addView(view, localLayoutParams)
+    }*/
+
+    fun hideSystemUI(window: Window) {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+    /*fun showSystemUI(window: Window) {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
     }*/
 }

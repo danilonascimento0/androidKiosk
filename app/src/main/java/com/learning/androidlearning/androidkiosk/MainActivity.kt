@@ -12,28 +12,22 @@ class MainActivity : AppCompatActivity() {
     var kiosk: Kiosk = Kiosk(this)
     //var isKioskActive: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_main)
 
-        txAndroidVersion.text = Build.VERSION.SDK_INT.toString()
-        txAndroidRelease.text = Build.VERSION.RELEASE.toString()
+            txAndroidVersion.text = Build.VERSION.SDK_INT.toString()
+            txAndroidRelease.text = Build.VERSION.RELEASE.toString()
 
-        kiosk.hideSystemUI(window)
-        btKiosk.setOnClickListener {
+            kiosk.hideSystemUI(window)
             setKioskMode()
         }
-    }
 
-    fun closeApplication(@Suppress("UNUSED_PARAMETER") view: View) {
-        moveTaskToBack(true)
-        exitProcess(-1)
-    }
-
-    private fun setKioskMode() {
-        kiosk.startKioskMode()
-        btKiosk.text = "Desativar Kiosk"
-        //isKioskActive = true
+        private fun setKioskMode() {
+            kiosk.startKioskMode()
+            btKiosk.text = "Desativar Kiosk"
+            txAtivo.text = "ATIVO"
+            //isKioskActive = true
 
         btKiosk.setOnClickListener {
             removeKioskMode()
@@ -43,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun removeKioskMode() {
         kiosk.stopKioskMode()
         btKiosk.text = "Ativar Kiosk"
+        txAtivo.text = "INATIVO"
         //isKioskActive = false
 
         btKiosk.setOnClickListener {
@@ -59,5 +54,10 @@ class MainActivity : AppCompatActivity() {
                 //kiosk.showSystemUI(window)
             //}
         }
+    }
+
+    fun closeApplication(@Suppress("UNUSED_PARAMETER") view: View) {
+        moveTaskToBack(true)
+        exitProcess(-1)
     }
 }

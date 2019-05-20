@@ -1,5 +1,6 @@
 package com.learning.androidlearning.androidkiosk
 
+import android.app.ActivityManager
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -59,17 +60,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openCalculator(@Suppress("UNUSED_PARAMETER") view: View) {
-        val intent = Intent()
-        intent.action = Intent.ACTION_MAIN
-        intent.addCategory(Intent.CATEGORY_APP_CALCULATOR)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+        val items = ArrayList<HashMap<String, Any>>()
+        val packs = packageManager.getInstalledPackages(0)
+        for (pi in packs) {
+            if (pi.packageName.toString().toLowerCase().contains("calculator")) {
+                val map = HashMap<String, Any>()
+                map["appName"] = pi.applicationInfo.loadLabel(packageManager)
+                map["packageName"] = pi.packageName
+                items.add(map)
+            }
+        }
+
+        if (items.size >= 1) {
+            val packageName = items[0]["packageName"] as String
+            val i = packageManager.getLaunchIntentForPackage(packageName)
+            if (i != null)
+                startActivity(i)
+        } else {
+            // Application not found
+        }
     }
 
     fun openBrowser(@Suppress("UNUSED_PARAMETER") view: View) {
         val openURL = Intent(Intent.ACTION_VIEW)
         openURL.data = Uri.parse("https://www.tutorialkart.com/")
         startActivity(openURL)
+    }
+
+    fun closeBackgroundApplication(@Suppress("UNUSED_PARAMETER") view: View) {
+        // TODO
     }
 
     fun closeApplication(@Suppress("UNUSED_PARAMETER") view: View) {

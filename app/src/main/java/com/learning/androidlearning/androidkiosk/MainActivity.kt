@@ -6,6 +6,7 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Build
+import android.support.v4.content.ContextCompat
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.system.exitProcess
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     private fun setKioskMode() {
         kiosk.startKioskMode()
         btKiosk.text = "Desativar Kiosk"
-        txAtivo.text = "ATIVO"
         //isKioskActive = true
 
         btKiosk.setOnClickListener {
@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     private fun removeKioskMode() {
         kiosk.stopKioskMode()
         btKiosk.text = "Ativar Kiosk"
-        txAtivo.text = "INATIVO"
         //isKioskActive = false
 
         btKiosk.setOnClickListener {
@@ -56,6 +55,35 @@ class MainActivity : AppCompatActivity() {
             //} else {
                 //kiosk.showSystemUI(window)
             //}
+        }
+    }
+
+    var comeOverHere = false
+
+    override fun onPause() {
+        super.onPause()
+
+        if (comeOverHere) {
+            val activityManager = applicationContext
+                .getSystemService(ACTIVITY_SERVICE) as ActivityManager
+
+            activityManager.moveTaskToFront(taskId, 0)
+        }
+    }
+
+    fun blockAll(@Suppress("UNUSED_PARAMETER") view: View) {
+        if (comeOverHere) {
+            comeOverHere = false
+            btBlock.text = "Bloquear"
+            btOpenCalculator.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            btOpenBrowser.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            btSettings.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+        } else {
+            comeOverHere = true
+            btBlock.text = "Desbloquear"
+            btOpenCalculator.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDisable))
+            btOpenBrowser.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDisable))
+            btSettings.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDisable))
         }
     }
 
@@ -87,9 +115,13 @@ class MainActivity : AppCompatActivity() {
         startActivity(openURL)
     }
 
-    fun closeBackgroundApplication(@Suppress("UNUSED_PARAMETER") view: View) {
-        // TODO
+    fun openSettings(@Suppress("UNUSED_PARAMETER") view: View) {
+        startActivityForResult(Intent(android.provider.Settings.ACTION_SETTINGS), 0)
     }
+
+    /*fun testWhenBlocked(@Suppress("UNUSED_PARAMETER") view: View) {
+        Toast.makeText(this, testEditText.text, Toast.LENGTH_LONG).show()
+    }*/
 
     fun closeApplication(@Suppress("UNUSED_PARAMETER") view: View) {
         moveTaskToBack(true)

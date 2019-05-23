@@ -25,7 +25,7 @@
             app:layout_constraintVertical_bias="0.074"/>
 
     <Button
-            android:id="@+id/btCalculator"
+            android:id="@+id/btOpenCalculator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -40,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.291"/>
+            app:layout_constraintVertical_bias="0.257" app:layout_constraintHorizontal_bias="0.51"/>
 
     <Button
             android:id="@+id/btOpenBrowser"
@@ -51,14 +51,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
-            android:text="Browser"
+            android:text="Navegador"
             android:textSize="70sp"
             android:onClick="openBrowser"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.415"/>
+            app:layout_constraintVertical_bias="0.381" app:layout_constraintHorizontal_bias="0.502"/>
 
     <TextView
             android:id="@+id/txAndroidVersion"
@@ -70,7 +70,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.543" app:layout_constraintHorizontal_bias="0.509"/>
+            app:layout_constraintVertical_bias="0.478" app:layout_constraintHorizontal_bias="0.213"/>
 
     <TextView
             android:id="@+id/txAndroidRelease"
@@ -82,10 +82,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.685"/>
+            app:layout_constraintVertical_bias="0.478" app:layout_constraintHorizontal_bias="0.796"/>
 
     <Button
-            android:id="@+id/btClose"
+            android:id="@+id/btBlock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -93,24 +93,62 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
-            android:text="Fechar Apps"
+            android:text="Bloquear"
             android:textSize="80sp"
-            android:onClick="closeBackgroundApplication"
+            android:onClick="blockAll"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.897"/>
+            app:layout_constraintVertical_bias="0.658" app:layout_constraintHorizontal_bias="0.561"/>
 
-    <TextView
-            android:id="@+id/txAtivo"
+    <Button
+            android:id="@+id/btSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="50sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="Configurações"
+            android:textSize="60sp"
+            android:onClick="openSettings"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.786"/>
+            app:layout_constraintVertical_bias="0.782" app:layout_constraintHorizontal_bias="0.549"/>
+
+    <!--<EditText
+            android:id="@+id/testEditText"
+            android:layout_width="354dp"
+            android:layout_height="55dp"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.774"/>
+
+    <Button
+            android:id="@+id/testButton"
+            android:layout_width="587dp"
+            android:layout_height="87dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="Teste entrada acima"
+            android:textSize="40sp"
+            android:onClick="testWhenBlocked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.891" app:layout_constraintHorizontal_bias="1.0"/>-->
 
 </android.support.constraint.ConstraintLayout>

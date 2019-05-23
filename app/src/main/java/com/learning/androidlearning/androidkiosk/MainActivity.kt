@@ -7,8 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Build
 import android.support.v4.content.ContextCompat
+import android.view.KeyEvent
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +56,8 @@ class MainActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
             //if (isKioskActive) {
-                kiosk.hideSystemUI(window)
+            kiosk.hideSystemUI(window)
+            comeOverHere = false
             //} else {
                 //kiosk.showSystemUI(window)
             //}
@@ -59,16 +65,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     var comeOverHere = false
+    var comeOverHereThroughHere = false
 
     override fun onPause() {
-        super.onPause()
+        if (comeOverHere && !comeOverHereThroughHere) {
+            comeBackToMe()
+        } else {
+            if (!comeOverHereThroughHere) {
+                comeOverHere = true
+                comeOverHereThroughHere = true
 
-        if (comeOverHere) {
-            val activityManager = applicationContext
-                .getSystemService(ACTIVITY_SERVICE) as ActivityManager
-
-            activityManager.moveTaskToFront(taskId, 0)
+                GlobalScope.launch {
+                    delay(10000)
+                    comeBackToMe()
+                }
+            }
         }
+        super.onPause()
+    }
+
+    private fun comeBackToMe() {
+        val activityManager = applicationContext.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        activityManager.moveTaskToFront(taskId, 0)
+    }
+
+    override fun onResume() {
+        resetComeBack()
+        super.onResume()
+    }
+
+    private fun resetComeBack() {
+        comeOverHere = false
+        comeOverHereThroughHere = false
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            Toast.makeText(this, "ENTRA", Toast.LENGTH_SHORT)
+        }
+        return super.onKeyUp(keyCode, event)
     }
 
     fun blockAll(@Suppress("UNUSED_PARAMETER") view: View) {

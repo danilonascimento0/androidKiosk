@@ -6,15 +6,17 @@ import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Build
+import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
+import android.annotation.TargetApi
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,8 +30,38 @@ class MainActivity : AppCompatActivity() {
         txAndroidVersion.text = Build.VERSION.SDK_INT.toString()
         txAndroidRelease.text = Build.VERSION.RELEASE.toString()
 
+        checkPermission()
+
         kiosk.hideSystemUI(window)
         setKioskMode()
+    }
+
+    var ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 5469
+
+    @TargetApi(Build.VERSION_CODES.M)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE) {
+            if (!Settings.canDrawOverlays(this)) {
+                // You don't have permission
+                checkPermission()
+            } else {
+                // Do as per your logic
+            }
+        }
+    }
+
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:$packageName")
+                )
+                startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE)
+            }
+        }
     }
 
     private fun setKioskMode() {
@@ -151,7 +183,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openSettings(@Suppress("UNUSED_PARAMETER") view: View) {
-        startActivityForResult(Intent(android.provider.Settings.ACTION_SETTINGS), 0)
+        startActivityForResult(Intent(Settings.ACTION_SETTINGS), 0)
     }
 
     /*fun testWhenBlocked(@Suppress("UNUSED_PARAMETER") view: View) {

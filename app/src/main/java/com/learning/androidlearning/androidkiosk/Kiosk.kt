@@ -2,6 +2,7 @@ package com.learning.androidlearning.androidkiosk
 
 import android.content.Context
 import android.graphics.PixelFormat
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.view.View
@@ -13,7 +14,9 @@ class Kiosk(context: Context) : AppCompatActivity() {
     private var viewBlockingStatus: CustomViewGroup? = null
 
     fun startKioskMode() {
-        this.blockStatusBar()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            this.blockStatusBar()
+        }
     }
 
     fun stopKioskMode() {
